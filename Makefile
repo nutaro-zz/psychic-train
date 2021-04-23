@@ -12,10 +12,9 @@ down:
 
 .PHONY: migrate
 migrate:
-	docker exec -i api bash -c "python manage.py makemigrations client"
-	docker exec -i api bash -c "python manage.py migrate"
-	docker-compose restart customers
+	docker exec -i clients_api bash -c "python manage.py migrate"
+	docker-compose restart clients_api
 
 .PHONY: createsuperuser
 createsuperuser:
-	docker exec -it api python manage.py createsuperuser
+	docker exec -it clients_api python manage.py createsuperuser --email admin@example.com --username admin

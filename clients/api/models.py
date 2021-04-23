@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Telefone(models.Model):
+
     ddd = models.CharField(max_length=2)
     numero = models.CharField(max_length=10)
     tipo = models.CharField(max_length=3, choices=[('COM', ('Comercial')), ('CEL', ('Celular')), ('RES', ('Residencial'))])
@@ -23,4 +24,3 @@ class Client(models.Model):
     sexo = models.CharField(max_length=10, choices=genero)
     Telefones = models.ManyToManyField(Telefone)
     Email = models.OneToOneField(Email, on_delete=models.CASCADE)
-

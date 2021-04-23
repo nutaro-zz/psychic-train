@@ -1,7 +1,5 @@
 FROM python:3.7-buster
 
-WORKDIR /opt/customers/
-
 RUN apt update
 RUN apt upgrade -y
 RUN apt-get install python3-dev default-libmysqlclient-dev build-essential -y
