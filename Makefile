@@ -12,6 +12,7 @@ down:
 
 .PHONY: migrate
 migrate:
+	docker exec -i clients_api bash -c "python manage.py makemigrations api"
 	docker exec -i clients_api bash -c "python manage.py migrate"
 	docker-compose restart clients_api
 

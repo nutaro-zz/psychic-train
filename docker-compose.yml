@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /opt/clients/
+    working_dir: /opt/app/
     command: bash -c "python manage.py runserver 0:80"
     env_file:
       - .env
@@ -15,8 +15,8 @@ services:
       clients:
         ipv4_address: 172.16.239.10
     volumes:
-      - ./clients:/opt/clients/
-      - ./clients/my.cnf:/etc/my.cnf
+      - ./clients:/opt/app/
+      - ./my.cnf:/etc/my.cnf
     depends_on:
       - clients_database
 
