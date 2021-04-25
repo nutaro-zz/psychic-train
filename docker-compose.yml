@@ -1,27 +1,27 @@
 version: "3.9"
 services:
-  customers:
-    container_name: api
+  clients_api:
+    container_name: clients_api
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /opt/customers/
+    working_dir: /opt/app/
     command: bash -c "python manage.py runserver 0:80"
     env_file:
       - .env
     expose:
       - "80"
     networks:
-      customers:
+      clients:
         ipv4_address: 172.16.239.10
     volumes:
-      - ./customers:/opt/customers
-      - ./customers/my.cnf:/etc/my.cnf
+      - ./clients:/opt/app/
+      - ./my.cnf:/etc/my.cnf
     depends_on:
-      - mysql
+      - clients_database
 
-  mysql:
-    container_name: data_base
+  clients_database:
+    container_name: clients_database
     image: "mysql:5.7"
     expose:
       - "3306"
@@ -29,13 +29,13 @@ services:
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', "--max-connections=500"]
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: customers
+      MYSQL_DATABASE: clients
     networks:
-      customers:
+      clients:
         ipv4_address: 172.16.239.11
 
 networks:
-  customers:
+  clients:
     driver: bridge
     ipam:
       driver: default
