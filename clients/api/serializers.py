@@ -1,14 +1,39 @@
-from rest_framework import serializers
+from rest_framework.serializers import IntegerField,\
+                                       ModelSerializer,\
+                                       StringRelatedField
 
-from api.models import Client
+from api.models import Client, Email, Phone
 
-class ClientSerializer(serializers.ModelSerializer):
 
-    phones = serializers.StringRelatedField(many=True)
-    email = serializers.StringRelatedField(many=False)
+class PhoneSerializer(ModelSerializer):
+
+    country_code = StringRelatedField(label='country', many=False)
+    area_code = StringRelatedField(label='area', many=False)
+    number = StringRelatedField(many=False)
+    type = StringRelatedField(many=False)
+
+
+    class Meta:
+        model = Phone
+        fields = ['id', 'country', 'area', 'number', 'type']
+
+
+class EmailSerializer(ModelSerializer):
+
+    email = StringRelatedField(many=False)
+
+    class Meta:
+        model = Email
+        fields = ['id', 'email']
+
+
+
+class ClientSerializer(ModelSerializer):
+
+    name = StringRelatedField(many=False)
+    email = EmailSerializer(many=True, read_only=True)
+    phone = PhoneSerializer(many=True, read_only=True)
 
     class Meta:
         model = Client
-        fields = ['name', 'gender', 'id_card',
-                  'social_security_number', 'birth_date',
-                  'phones', 'email']
+        fields = ['id', 'name', 'email', 'phone']

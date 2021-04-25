@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	docker-compose build
+	bash -c "docker-compose build $1"
 
 .PHONY: up
 up:
